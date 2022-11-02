@@ -14,25 +14,35 @@ const Answers = [
 ];
 
 function App() {
-  let [questionNum, setQuestionNum] = useState("");
+  let [answersNum, setAnswersNum] = useState("");
   let [animBoll, setAnimBoll] = useState(false);
+  let [change, setChange] = useState("");
 
   const randomNum = (num) => {
     return Math.floor(Math.random() * num);
   };
 
   const handleMouseDown = () => {
-    setQuestionNum(randomNum(Answers.length));
-    setAnimBoll(true);
+    if (change) {
+      setAnswersNum(randomNum(Answers.length));
+      setAnimBoll(true);
+    }
   };
 
   const handleMouseUp = () => {
-    setAnimBoll(false);
+    if (change) {
+      setAnimBoll(false);
+    }
   };
 
   return (
     <div className="wrapper">
-      <Input className={"input"} placeholder={"Введіть питання"} />
+      <Input
+        className={"input"}
+        placeholder={"Введіть питання"}
+        change={change}
+        setChange={setChange}
+      />
 
       <div className="buttons">
         <Button md={handleMouseDown} mu={handleMouseUp}>
@@ -44,7 +54,7 @@ function App() {
         className="boll"
         style={{ animation: animBoll && "anim-boll 0.3s ease-in-out 1" }}
       >
-        <span>{Answers[questionNum]}</span>
+        <span>{change ? Answers[answersNum] : "Введіть питання"}</span>
       </div>
     </div>
   );
